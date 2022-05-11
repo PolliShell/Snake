@@ -3,51 +3,61 @@
 #include <ctime>
 using namespace std;
 
-enum eDirection {STOP = 0, LEFT, RIGHT, UP, DOWN};
+enum eDirection { STOP = 0, LEFT, RIGHT, UP, DOWN };
+
 class Snake {
 protected:
-    int width;//ширина поля
-    int heigth;//высота поля
-    int tailX[100], tailY[100];//В массивах храняться координаты хвоста змейки
-    int nTail;//длина хвоста
+	int tailX[100], tailY[100];//Р’ РјР°СЃСЃРёРІР°С… С…СЂР°РЅСЏС‚СЊСЃСЏ РєРѕРѕСЂРґРёРЅР°С‚С‹ С…РІРѕСЃС‚Р° Р·РјРµР№РєРё
+	int nTail;//РґР»РёРЅР° С…РІРѕСЃС‚Р°
+	int xHead, yHead;
+
+	int width;//С€РёСЂРёРЅР° РїРѕР»СЏ
+	int heigth;//РІС‹СЃРѕС‚Р° РїРѕР»СЏ
+
 public:
-    Snake() {//конструктор, задающий начальные значения змейки
-        width = 20;
-        heigth = 15;
-        nTail = 0;
-    }
+	Snake() {//РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ, Р·Р°РґР°СЋС‰РёР№ РЅР°С‡Р°Р»СЊРЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ Р·РјРµР№РєРё
+		width = 20;
+		heigth = 15;
+		nTail = 0;
+	}
 };
 
-class Game : public Snake //класс игра
+class Game : public Snake //РєР»Р°СЃСЃ РёРіСЂР°
 {
 public:
-    eDirection dir;
-    bool gameover;//отвечает за конец игры
-    int xHead, yHead, fruitX, fruitY, score;
-    Game() :Snake() {
-        srand(time(NULL));
-        gameover = false;
-        dir = STOP;
-        xHead = (width / 2) - 1;
-        yHead = (heigth / 2) - 1;
-        fruitX = rand() % (width - 1);
-        fruitY = rand() % heigth;
-        score = 0;
-    }
+	eDirection dir;
+	bool gameover;//РѕС‚РІРµС‡Р°РµС‚ Р·Р° РєРѕРЅРµС† РёРіСЂС‹
+	int score;
+	int fruitX, fruitY;
 
-    void Draw();//рисуем поле
-    void Input();//получаем входные данные
-    void Logic();//реализуем логику игры
-    void Draw_horizontal_borders();//рисуем горизонтальные стенки
-    bool Draw_vertical_borders(int,int);//рисуем вертикальные стенки
-    bool Draw_head_of_snake(int, int);//рисуем голову змейки
-    bool Draw_Fruite(int, int);//рисуем фрукт
-    void Draw_Snake_tail_or_space(int, int);
-    void Tail_step();//метод отвечающий за движение хвоста змейки
-    void Change_of_head_position();//
-    void Eating_Fruits();//процесс поедания фруктов
-    void head_to_tail_check();//проверка чтобы голова змейки не встретилась с хвостом
-    void meating_with_border();//реализация взаимодействия змейки со стенками поля
-    bool Check_Tail_and_Fruit_coincidence();//
+	Game() :Snake() {
+		srand(time(NULL));
+		gameover = false;
+		dir = STOP;
+
+		xHead = (width / 2) - 1;
+		yHead = (heigth / 2) - 1;
+
+		fruitX = rand() % (width - 1);
+		fruitY = rand() % heigth;
+		score = 0;
+	}
+
+	void draw();//СЂРёСЃСѓРµРј РїРѕР»Рµ
+	void input();//РїРѕР»СѓС‡Р°РµРј РІС…РѕРґРЅС‹Рµ РґР°РЅРЅС‹Рµ
+	void logic();//СЂРµР°Р»РёР·СѓРµРј Р»РѕРіРёРєСѓ РёРіСЂС‹
+	void draw_horizontal_borders();//СЂРёСЃСѓРµРј РіРѕСЂРёР·РѕРЅС‚Р°Р»СЊРЅС‹Рµ СЃС‚РµРЅРєРё
+	bool draw_vertical_borders(int, int);//СЂРёСЃСѓРµРј РІРµСЂС‚РёРєР°Р»СЊРЅС‹Рµ СЃС‚РµРЅРєРё
+	bool draw_head_of_snake(int, int);//СЂРёСЃСѓРµРј РіРѕР»РѕРІСѓ Р·РјРµР№РєРё
+	bool draw_fruite(int, int);//СЂРёСЃСѓРµРј С„СЂСѓРєС‚
+	void draw_snake_tail_or_space(int, int);
+	void tail_step();//РјРµС‚РѕРґ РѕС‚РІРµС‡Р°СЋС‰РёР№ Р·Р° РґРІРёР¶РµРЅРёРµ С…РІРѕСЃС‚Р° Р·РјРµР№РєРё
+	void change_of_head_position();//
+	void eating_fruits();//РїСЂРѕС†РµСЃСЃ РїРѕРµРґР°РЅРёСЏ С„СЂСѓРєС‚РѕРІ
+	void head_to_tail_check();//РїСЂРѕРІРµСЂРєР° С‡С‚РѕР±С‹ РіРѕР»РѕРІР° Р·РјРµР№РєРё РЅРµ РІСЃС‚СЂРµС‚РёР»Р°СЃСЊ СЃ С…РІРѕСЃС‚РѕРј
+	void meating_with_border();//СЂРµР°Р»РёР·Р°С†РёСЏ РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёСЏ Р·РјРµР№РєРё СЃРѕ СЃС‚РµРЅРєР°РјРё РїРѕР»СЏ
+	bool check_tail_and_fruit_coincidence();//
 };
+
+
 
