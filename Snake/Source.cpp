@@ -5,7 +5,7 @@
 #include <conio.h>
 using namespace std;
 
-void Game::Draw_horizontal_borders() {
+void Game::draw_horizontal_borders() {
 	for (int i = 0; i < width+1; i++)
 	
 		cout << "#";
@@ -13,8 +13,8 @@ void Game::Draw_horizontal_borders() {
 	cout << endl;
 }
 
-bool Game::Draw_vertical_borders(int y_coordinate, int x_coordinate) {
-	if (x_coordinate == 0 || x_coordinate==width-1)//вывод вертикальных границ поля
+bool Game::draw_vertical_borders(int y_coordinate, int x_coordinate) {
+	if (x_coordinate == 0 || x_coordinate==width-1)//РІС‹РІРѕРґ РІРµСЂС‚РёРєР°Р»СЊРЅС‹С… РіСЂР°РЅРёС† РїРѕР»СЏ
 	{
 		cout << "#";
 		return true;
@@ -22,8 +22,8 @@ bool Game::Draw_vertical_borders(int y_coordinate, int x_coordinate) {
 	return false;
 }
 
-bool Game::Draw_head_of_snake(int y_coordinate, int x_coordinate) {
-	if (y_coordinate == yHead && x_coordinate == xHead)//вывод головы змеи
+bool Game::draw_head_of_snake(int y_coordinate, int x_coordinate) {
+	if (y_coordinate == yHead && x_coordinate == xHead)//РІС‹РІРѕРґ РіРѕР»РѕРІС‹ Р·РјРµРё
 	{
 		cout << "0";
 		return true;
@@ -31,8 +31,8 @@ bool Game::Draw_head_of_snake(int y_coordinate, int x_coordinate) {
 	return false;
 }
 
-bool Game::Draw_Fruite(int y_coordinate, int x_coordinate) {
-	if (y_coordinate == fruitY && x_coordinate == fruitX)//вывод фрукта
+bool Game::draw_fruite(int y_coordinate, int x_coordinate) {
+	if (y_coordinate == fruitY && x_coordinate == fruitX)//РІС‹РІРѕРґ С„СЂСѓРєС‚Р°
 	{
 		cout << "F";
 		return true;
@@ -40,68 +40,83 @@ bool Game::Draw_Fruite(int y_coordinate, int x_coordinate) {
 	return false;
 }
 
-void Game::Draw_Snake_tail_or_space(int y_coordinate, int x_coordinate) {
-	bool print = false;//переменная принимает истинное значение, если мы нарисовали элемент хвоста и остается ложным, если не нарисовали
-	for (int k = 0; k < nTail; k++)//цикл по длине хвоста
+void Game::draw_snake_tail_or_space(int y_coordinate, int x_coordinate) {
+	bool print = false;//РїРµСЂРµРјРµРЅРЅР°СЏ РїСЂРёРЅРёРјР°РµС‚ РёСЃС‚РёРЅРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ, РµСЃР»Рё РјС‹ РЅР°СЂРёСЃРѕРІР°Р»Рё СЌР»РµРјРµРЅС‚ С…РІРѕСЃС‚Р° Рё РѕСЃС‚Р°РµС‚СЃСЏ Р»РѕР¶РЅС‹Рј, РµСЃР»Рё РЅРµ РЅР°СЂРёСЃРѕРІР°Р»Рё
+	for (int k = 0; k < nTail; k++)//С†РёРєР» РїРѕ РґР»РёРЅРµ С…РІРѕСЃС‚Р°
 	
-		if (tailX[k] == x_coordinate && tailY[k] == y_coordinate)//если координаты нашей точки совпадают с координатами элемента хвоста змейки то принт равно тру и рисуем элемент хвоста
+		if (tailX[k] == x_coordinate && tailY[k] == y_coordinate)//РµСЃР»Рё РєРѕРѕСЂРґРёРЅР°С‚С‹ РЅР°С€РµР№ С‚РѕС‡РєРё СЃРѕРІРїР°РґР°СЋС‚ СЃ РєРѕРѕСЂРґРёРЅР°С‚Р°РјРё СЌР»РµРјРµРЅС‚Р° С…РІРѕСЃС‚Р° Р·РјРµР№РєРё С‚Рѕ РїСЂРёРЅС‚ СЂР°РІРЅРѕ С‚СЂСѓ Рё СЂРёСЃСѓРµРј СЌР»РµРјРµРЅС‚ С…РІРѕСЃС‚Р°
 		{
 			print = true;
 			cout << "o";
 		}
-		if (!print)//если не нарисовали элемент хвоста змейки, то ставим пробел
+		if (!print)//РµСЃР»Рё РЅРµ РЅР°СЂРёСЃРѕРІР°Р»Рё СЌР»РµРјРµРЅС‚ С…РІРѕСЃС‚Р° Р·РјРµР№РєРё, С‚Рѕ СЃС‚Р°РІРёРј РїСЂРѕР±РµР»
 			cout << " ";
 	
 }
 
-void Game::Draw() {
-	system("cls");//очищает консоль
-	Draw_horizontal_borders();//рисуем верхнюю границу
+void Game::draw() {
+	system("cls");//РѕС‡РёС‰Р°РµС‚ РєРѕРЅСЃРѕР»СЊ
+	draw_horizontal_borders();//СЂРёСЃСѓРµРј РІРµСЂС…РЅСЋСЋ РіСЂР°РЅРёС†Сѓ
 	for (int i = 0; i < heigth; i++)
 	{
 		for (int j = 0; j < width; j++)
 		{
-			if (Draw_vertical_borders(i, j));
-			if (Draw_head_of_snake(i, j));
+			if (draw_vertical_borders(i, j));
+			if (draw_head_of_snake(i, j));
 			else {
-				if (Draw_Fruite(i, j));
+				if (draw_fruite(i, j));
 				else {
-					Draw_Snake_tail_or_space(i, j);
+					draw_snake_tail_or_space(i, j);
 				}
 			}
 		}
 		cout << endl;
 	}
-	Draw_horizontal_borders();//рисуем нижнюю границу
-	cout << "Score: " << score << endl;//виодим количество очков на данный момент
+	draw_horizontal_borders();//СЂРёСЃСѓРµРј РЅРёР¶РЅСЋСЋ РіСЂР°РЅРёС†Сѓ
+	cout << "Score: " << score << endl;//РІРёРѕРґРёРј РєРѕР»РёС‡РµСЃС‚РІРѕ РѕС‡РєРѕРІ РЅР° РґР°РЅРЅС‹Р№ РјРѕРјРµРЅС‚
 }
 
-void Game::Input() {
+void Game::input() {
 	if (_kbhit())
 	{
 		switch (_getch())
 		{
 		case 'a':
 		{
+			if(dir!=RIGHT)
+			{
 			dir = LEFT;
+			}
 			break;
 		}
 		case'd':
 		{
+			if (dir!=LEFT)
+			{
 			dir = RIGHT;
+			}
+			
 			break;
 		}
 		case'w':
 		{
+			if (dir!=DOWN)
+			{
 			dir = UP;
+			}
+			
 			break;
 		}
 		case 's':
 		{
-			dir = DOWN;
+			if (dir!=UP)
+			{
+		dir = DOWN;
+			}
+			
 			break;
 		}
-		case'x'://при нажатии х мы автоматически выходим из игры
+		case'x'://РїСЂРё РЅР°Р¶Р°С‚РёРё С… РјС‹ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё РІС‹С…РѕРґРёРј РёР· РёРіСЂС‹
 		{
 			gameover = true;
 			break;
@@ -110,14 +125,16 @@ void Game::Input() {
 	}
 }
 
-void Game::Tail_step()
+void Game::tail_step()
 {
-	int prevX = tailX[0];//предыдущая позиция по х
-	int prevY = tailY[0];//предыдущая позиция по у
-	int prev2X, prev2Y;//следующий элемент хвоста
+	int prevX = tailX[0];//РїСЂРµРґС‹РґСѓС‰Р°СЏ РїРѕР·РёС†РёСЏ РїРѕ С…
+	int prevY = tailY[0];//РїСЂРµРґС‹РґСѓС‰Р°СЏ РїРѕР·РёС†РёСЏ РїРѕ Сѓ
+	int prev2X, prev2Y;//СЃР»РµРґСѓСЋС‰РёР№ СЌР»РµРјРµРЅС‚ С…РІРѕСЃС‚Р°
+
 	tailX[0] = xHead;
 	tailY[0] = yHead;
-	for (int i = 1; i < nTail; i++)//процесс движения хвоста
+
+	for (int i = 1; i < nTail; i++)//РїСЂРѕС†РµСЃСЃ РґРІРёР¶РµРЅРёСЏ С…РІРѕСЃС‚Р°
 	{
 		prev2X = tailX[i];
 		prev2Y = tailY[i];
@@ -129,9 +146,9 @@ void Game::Tail_step()
 	}
 }
 
-void Game::Change_of_head_position()
+void Game::change_of_head_position()
 {
-	switch (dir)//в зависимости от значения dir изменяем координаты головы змейки
+	switch (dir)//РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ Р·РЅР°С‡РµРЅРёСЏ dir РёР·РјРµРЅСЏРµРј РєРѕРѕСЂРґРёРЅР°С‚С‹ РіРѕР»РѕРІС‹ Р·РјРµР№РєРё
 	{
 	case LEFT:
 		xHead--;
@@ -148,7 +165,7 @@ void Game::Change_of_head_position()
 	}
 }
 
-void Game::meating_with_border()//реализация случая, если голова змейки попадает на границу
+void Game::meating_with_border()//СЂРµР°Р»РёР·Р°С†РёСЏ СЃР»СѓС‡Р°СЏ, РµСЃР»Рё РіРѕР»РѕРІР° Р·РјРµР№РєРё РїРѕРїР°РґР°РµС‚ РЅР° РіСЂР°РЅРёС†Сѓ
 {
 	if (xHead >= width - 1)
 		xHead = 0;
@@ -164,7 +181,7 @@ void Game::head_to_tail_check()
 {
 	for (int i = 0; i < nTail; i++)
 	{
-		if (tailX[i] == xHead && tailY[i] == yHead)//если голова змейки попадет на хвост
+		if (tailX[i] == xHead && tailY[i] == yHead)//РµСЃР»Рё РіРѕР»РѕРІР° Р·РјРµР№РєРё РїРѕРїР°РґРµС‚ РЅР° С…РІРѕСЃС‚
 		{
 			gameover = true;
 
@@ -172,7 +189,7 @@ void Game::head_to_tail_check()
 	}
 }
 
-bool Game::Check_Tail_and_Fruit_coincidence()
+bool Game::check_tail_and_fruit_coincidence()
 {
 	bool f = true;
 	for (int i = 0; i < nTail && f; i++)
@@ -189,25 +206,26 @@ bool Game::Check_Tail_and_Fruit_coincidence()
 	return f;
 }
 
-void Game::Eating_Fruits()
+void Game::eating_fruits()
 {
-	if (xHead==fruitX && yHead==fruitY)//поедание фруктов
+	if (xHead==fruitX && yHead==fruitY)//РїРѕРµРґР°РЅРёРµ С„СЂСѓРєС‚РѕРІ
 	{
-		score += 10;//за поедание фруктов добавляются 10 очков
+		score += 10;//Р·Р° РїРѕРµРґР°РЅРёРµ С„СЂСѓРєС‚РѕРІ РґРѕР±Р°РІР»СЏСЋС‚СЃСЏ 10 РѕС‡РєРѕРІ
 		fruitX = rand() % (width - 1);
 		fruitY = rand() % heigth;
 		if (nTail > 0)
-			while (Check_Tail_and_Fruit_coincidence());//проверка на совпадение координат
+			while (check_tail_and_fruit_coincidence());//РїСЂРѕРІРµСЂРєР° РЅР° СЃРѕРІРїР°РґРµРЅРёРµ РєРѕРѕСЂРґРёРЅР°С‚
 		nTail++;
 	}
 }
 
-void Game::Logic()
+void Game::logic()
 {
-	Tail_step();
-	Change_of_head_position();
+	tail_step();
+	change_of_head_position();
 	meating_with_border();
 	head_to_tail_check();
-	Eating_Fruits();
+	eating_fruits();
 }
+
 
